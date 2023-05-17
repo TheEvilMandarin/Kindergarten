@@ -1,0 +1,107 @@
+//---------------------------------------------------------------------------
+
+#ifndef Unit1H
+#define Unit1H
+//---------------------------------------------------------------------------
+#include <System.Classes.hpp>
+#include <Vcl.Controls.hpp>
+#include <Vcl.StdCtrls.hpp>
+#include <Vcl.Forms.hpp>
+#include <Data.DB.hpp>
+#include <Data.Win.ADODB.hpp>
+#include <Vcl.DBCtrls.hpp>
+#include <Vcl.DBGrids.hpp>
+#include <Vcl.ExtCtrls.hpp>
+#include <Vcl.Grids.hpp>
+#include <Vcl.ComCtrls.hpp>
+#include <Vcl.Buttons.hpp>
+#include <Vcl.Menus.hpp>
+//---------------------------------------------------------------------------
+class TForm1 : public TForm
+{
+__published:	// IDE-managed Components
+	TDataSource *DataSource1;
+	TADOConnection *ADOConnection1;
+	TADOTable *ADOTable1;
+	TADOTable *ADOTable2;
+	TADOTable *ADOTable3;
+	TDataSource *DataSource2;
+	TDataSource *DataSource3;
+	TLabel *Label1;
+	TDataSource *DataSource4;
+	TADOTable *ADOTable4;
+	TAutoIncField *ADOTable4робітника;
+	TWideStringField *ADOTable4ПІБ;
+	TWideStringField *ADOTable4Посада;
+	TIntegerField *ADOTable4групи;
+	TIntegerField *ADOTable4Стаж;
+	TDateTimeField *ADOTable4Датанародження;
+	TWideStringField *ADOTable4Телефон;
+	TAutoIncField *ADOTable1групи;
+	TWideStringField *ADOTable1Назва;
+	TIntegerField *ADOTable1Максиимальнакількістьлюдей;
+	TWideStringField *ADOTable1Видгрупи;
+	TAutoIncField *ADOTable2дитини;
+	TWideStringField *ADOTable2ПІБ;
+	TWideStringField *ADOTable2ПІБбатьків;
+	TDateTimeField *ADOTable2Датанародження;
+	TWideStringField *ADOTable2Адреса;
+	TWideStringField *ADOTable2Телефонбітьків;
+	TAutoIncField *ADOTable3Записужурналі;
+	TIntegerField *ADOTable3дитини;
+	TIntegerField *ADOTable3групи;
+	TDateTimeField *ADOTable3Датазарахування;
+	TDateTimeField *ADOTable3Кінецьнавчаннядитини;
+	TStringField *ADOTable4Назвагрупи;
+	TStringField *ADOTable3ПІБдитини;
+	TStringField *ADOTable3Назвагрупи;
+	TMainMenu *MainMenu1;
+	TMenuItem *N1;
+	TMenuItem *N2;
+	TIntegerField *ADOTable2Вік;
+	TPageControl *PageControl1;
+	TTabSheet *TabSheet1;
+	TSpeedButton *SpeedButton1;
+	TDBGrid *DBGrid1;
+	TDBNavigator *DBNavigator1;
+	TEdit *Edit5;
+	TButton *Button2;
+	TTabSheet *TabSheet2;
+	TDBGrid *DBGrid2;
+	TDBNavigator *DBNavigator2;
+	TTabSheet *TabSheet3;
+	TDBGrid *DBGrid3;
+	TDBNavigator *DBNavigator3;
+	TTabSheet *TabSheet4;
+	TDBGrid *DBGrid4;
+	TDBNavigator *DBNavigator4;
+	TComboBox *ComboBox1;
+	TComboBox *ComboBox2;
+	TSpeedButton *SpeedButton2;
+	TButton *Button1;
+	TButton *Button3;
+	TButton *Button4;
+	TButton *Button5;
+	TMenuItem *N3;
+	void __fastcall Button2Click(TObject *Sender);
+	void __fastcall DBGrid1TitleClick(TColumn *Column);
+	void __fastcall SpeedButton1Click(TObject *Sender);
+	void __fastcall ADOTable2CalcFields(TDataSet *DataSet);
+	void __fastcall DBGrid2TitleClick(TColumn *Column);
+	void __fastcall DBGrid4TitleClick(TColumn *Column);
+	void __fastcall N2Click(TObject *Sender);
+	void __fastcall SpeedButton2Click(TObject *Sender);
+	void __fastcall Edit5Click(TObject *Sender);
+	void __fastcall Button1Click(TObject *Sender);
+	void __fastcall Button3Click(TObject *Sender);
+	void __fastcall Button4Click(TObject *Sender);
+	void __fastcall Button5Click(TObject *Sender);
+	void __fastcall N3Click(TObject *Sender);
+private:	// User declarations
+public:		// User declarations
+	__fastcall TForm1(TComponent* Owner);
+};
+//---------------------------------------------------------------------------
+extern PACKAGE TForm1 *Form1;
+//---------------------------------------------------------------------------
+#endif

@@ -1,0 +1,246 @@
+//---------------------------------------------------------------------------
+
+#include <vcl.h>
+#pragma hdrstop
+
+#include "Unit1.h"
+#include "Unit2.h"
+#include "Unit3.h"
+#include "ABOUT.h"
+//---------------------------------------------------------------------------
+#pragma package(smart_init)
+#pragma resource "*.dfm"
+TForm1 *Form1;
+//---------------------------------------------------------------------------
+__fastcall TForm1::TForm1(TComponent* Owner)
+	: TForm(Owner)
+{
+	 PageControl1->Pages[0]->Caption = "Група";
+	 PageControl1->Pages[1]->Caption = "Діти";
+	 PageControl1->Pages[2]->Caption = "Журнал";
+	 PageControl1->Pages[3]->Caption = "Персонал";
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TForm1::Button2Click(TObject *Sender)
+{
+	if(Edit5->Text.IsEmpty()){
+		Application->Title="Результат";
+		ShowMessage("Заповніть поле вводу!");
+	}
+	else
+	{
+		if(ADOTable1->Locate("Назва",Edit5->Text,TLocateOptions())){
+			Application->Title="Результат";
+			ShowMessage("Групу знайдено!");
+			DBGrid1->SetFocus();
+		}
+		else
+		{
+			Application->Title="Результат";
+			ShowMessage("Групу не знайдено!");
+		}
+
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::DBGrid1TitleClick(TColumn *Column)
+{
+	try{
+	if ((ADOTable1->Sort.Pos(Column->FieldName) > 0) && (ADOTable1->Sort.Pos("ASC") > 0))
+	 ADOTable1->Sort = Column->FieldName + " DESC";//сортировка по убыванию
+   else
+	 ADOTable1->Sort = Column->FieldName + " ASC";//по возрастанию
+	}
+	catch(...)
+	{
+		Application->Title="Помилка";
+		MessageDlg("Помилка! Сортування за даним полем наможливе!", mtWarning, TMsgDlgButtons() << mbOK, 0);
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::SpeedButton1Click(TObject *Sender)
+{
+	if(SpeedButton1->Down==true)
+	{
+		ADOTable1->Filter = "[Вид групи] = " + QuotedStr(ComboBox1->Text);
+		ADOTable1->Filtered=true;
+		SpeedButton1->Caption="Відмінити" ;
+	}
+	else {ADOTable1->Filtered=false;
+		ComboBox1->Text = "Оберіть вид групи для фільтру";
+		SpeedButton1->Caption="Фільтр" ;}
+
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::ADOTable2CalcFields(TDataSet *DataSet)
+{
+	ADOTable2->FieldByName("Вік")->Value = (Now().operator int() - (ADOTable2->FieldByName("Дата народження")->Value).operator int()-1)/365;
+}
+//---------------------------------------------------------------------------
+
+
+
+
+void __fastcall TForm1::DBGrid2TitleClick(TColumn *Column)
+{
+ try{
+	if ((ADOTable2->Sort.Pos(Column->FieldName) > 0) && (ADOTable1->Sort.Pos("ASC") > 0))
+	 ADOTable2->Sort = Column->FieldName + " DESC";//сортировка по убыванию
+   else
+	 ADOTable2->Sort = Column->FieldName + " ASC";//по возрастанию
+	}
+	catch(...)
+	{
+		Application->Title="Помилка";
+		MessageDlg("Помилка! Сортування за даним полем наможливе!", mtWarning, TMsgDlgButtons() << mbOK, 0);
+	}
+}
+//---------------------------------------------------------------------------
+
+
+void __fastcall TForm1::DBGrid4TitleClick(TColumn *Column)
+{
+try{
+	if ((ADOTable4->Sort.Pos(Column->FieldName) > 0) && (ADOTable1->Sort.Pos("ASC") > 0))
+	 ADOTable4->Sort = Column->FieldName + " DESC";//сортировка по убыванию
+   else
+	 ADOTable4->Sort = Column->FieldName + " ASC";//по возрастанию
+	}
+	catch(...)
+	{
+		Application->Title="Помилка";
+		MessageDlg("Помилка! Сортування за даним полем наможливе!", mtWarning, TMsgDlgButtons() << mbOK, 0);
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::N2Click(TObject *Sender)
+{
+	Form1->Hide();
+	Form3->Show();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::SpeedButton2Click(TObject *Sender)
+{
+	if(SpeedButton2->Down==true)
+	{
+		ADOTable4->Filter = "[Посада]= " + QuotedStr(ComboBox2->Text);
+		ADOTable4->Filtered=true;
+		SpeedButton2->Caption="Відмінити" ;
+	}
+	else {ADOTable4->Filtered=false;
+		ComboBox2->Text = "Оберіть посаду для фільтру";
+		SpeedButton2->Caption="Фільтр" ;}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Edit5Click(TObject *Sender)
+{
+    Edit5->Clear();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button1Click(TObject *Sender)
+{
+	TfrxReport *Report;
+	Report = Form2->frxReport1;
+	Report->Preview = Form2->frxPreview1;
+	Report->ShowReport();
+	Form2->WindowState=wsMaximized; //Размер по всему экрану
+	Form2->Caption = "Групи";
+	Form2->Show();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button3Click(TObject *Sender)
+{
+	TfrxReport *Report;
+	Report = Form2->frxReport2;
+	Report->Preview = Form2->frxPreview1;
+	Report->ShowReport();
+	Form2->WindowState=wsMaximized; //Размер по всему экрану
+	Form2->Caption = "Діти";
+	Form2->Show();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button4Click(TObject *Sender)
+{
+	TfrxReport *Report;
+	Report = Form2->frxReport3;
+	Report->Preview = Form2->frxPreview1;
+	Report->ShowReport();
+	Form2->WindowState=wsMaximized; //Размер по всему экрану
+	Form2->Caption = "Журнал";
+	Form2->Show();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button5Click(TObject *Sender)
+{
+	TfrxReport *Report;
+	ADOTable4->Sort = "Посада ASC";
+	Report = Form2->frxReport4;
+	Report->Preview = Form2->frxPreview1;
+	Report->ShowReport();
+	Form2->WindowState=wsMaximized; //Размер по всему экрану
+	Form2->Caption = "Працівники";
+	Form2->Show();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::N3Click(TObject *Sender)
+{
+	AboutBox->ShowModal();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Edit1Click(TObject *Sender)
+{
+    Edit1->Clear();
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::Button6Click(TObject *Sender)
+{
+    TLocateOptions Options;
+	Options << loPartialKey << loCaseInsensitive;
+	if(Edit1->Text.IsEmpty()){
+		Application->Title="Результат";
+		ShowMessage("Заповніть поле вводу!");
+	}
+	else
+	{
+		if(ADOTable2->Locate("ПІБ",Edit1->Text, Options)){
+			Application->Title="Результат";
+			ShowMessage("Дитину знайдено!");
+			DBGrid2->SetFocus();
+		}
+		else
+		{
+			Application->Title="Результат";
+			ShowMessage("Дитину не знайдено!");
+		}
+	}
+}
+//---------------------------------------------------------------------------
+
+void __fastcall TForm1::SpeedButton3Click(TObject *Sender)
+{
+if(SpeedButton3->Down==true)
+	{
+		ADOTable2->Filter = "[Дата народження] = " + QuotedStr(DateTimePicker1->DateTime.FormatString("dd MMM yy"));
+		ADOTable2->Filtered=true;
+		SpeedButton3->Caption="Відмінити" ;
+	}
+	else {ADOTable2->Filtered=false;
+		SpeedButton3->Caption="Фільтр" ;}
+}
+//---------------------------------------------------------------------------
+
